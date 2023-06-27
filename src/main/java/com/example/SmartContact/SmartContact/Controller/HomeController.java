@@ -4,10 +4,11 @@ import com.example.SmartContact.SmartContact.dao.UserRepository;
 import com.example.SmartContact.SmartContact.entities.User;
 import com.example.SmartContact.SmartContact.helper.Message;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +39,8 @@ public class HomeController {
 
     // handler for register user
     @RequestMapping(value = "/do_register",method = RequestMethod.POST)
-    public String registerUser(@ModelAttribute("user") User user, @RequestParam(value = "agreement",defaultValue = "false") boolean agreement, Model model, HttpSession session){
+    public String registerUser(@Valid @ModelAttribute("user") User user, @RequestParam(value = "agreement",defaultValue = "false") boolean agreement, Model model,
+                                HttpSession session){
        try {
            if (!agreement){
                System.out.println("You have not agreed the terms and conditions");

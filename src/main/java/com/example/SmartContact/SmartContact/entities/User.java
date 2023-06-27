@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -22,12 +23,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotEmpty
-    @Column(length = 30)
+
+    @NotEmpty(message = "Please enter the name")
+    @Size(min = 2,max = 20)
     private String name;
+
     @Column(unique = true)
     @Email
     private String email;
+
     @NotEmpty
     private String password;
     private String role;
@@ -38,7 +42,5 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "user")
     private List<Contact> contacts = new ArrayList<>();
-
-
 
 }
